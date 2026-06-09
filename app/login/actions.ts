@@ -5,6 +5,7 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@/utils/supabase/server'
 import { createAdminClient } from '@/utils/supabase/admin'
+import { sendWelcomeEmail } from '@/app/actions/sendWelcomeEmail'
 
 export type ActionState = { error: string | null }
 
@@ -89,6 +90,10 @@ export async function signup(
     console.error('[SIGNUP PROFILE INSERT ERROR]', profileError)
     return { error: 'Account created but profile setup failed — please contact support' }
   }
+
+  // 5. Send welcome email — fire and don't await so it never blocks the redirect.
+  //    Errors are caught internally inside sendWelcomeEmail.
+  sendWelcomeEmail({ email, handle }).catch(() => {/* already logged inside */})
 
   revalidatePath('/', 'layout')
   redirect('/dashboard')
