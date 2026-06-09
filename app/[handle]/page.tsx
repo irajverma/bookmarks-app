@@ -1,6 +1,6 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
-
+import { notFound } from 'next/navigation'
 
 type Profile = {
   id: string
@@ -37,31 +37,7 @@ export default async function PublicProfilePage({ params }: { params: { handle: 
     .maybeSingle<Profile>()
 
   if (profileError || !profile) {
-    // Show a premium 404 page instead of the default Next.js 404
-    return (
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[400px] bg-gradient-to-b from-red-500/10 via-transparent to-transparent blur-[120px] pointer-events-none -z-10" />
-        <div className="w-full max-w-md bg-zinc-900/40 border border-zinc-900 rounded-3xl p-8 backdrop-blur-md shadow-2xl text-center flex flex-col gap-6 items-center">
-          <div className="h-16 w-16 bg-red-950/40 border border-red-900/50 rounded-2xl flex items-center justify-center text-red-400">
-            <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-          <div>
-            <h1 className="text-xl font-bold tracking-tight text-zinc-100">Profile Not Found</h1>
-            <p className="text-sm text-zinc-500 mt-2">
-              The handle <span className="font-mono text-zinc-300">@{handle}</span> does not exist or has been removed.
-            </p>
-          </div>
-          <Link
-            href="/signup"
-            className="w-full px-4 py-2.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white rounded-xl font-semibold shadow-lg shadow-blue-500/10 transition-all text-sm"
-          >
-            Claim this handle
-          </Link>
-        </div>
-      </div>
-    )
+    notFound()
   }
 
   // 2. Fetch public bookmarks
