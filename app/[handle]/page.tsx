@@ -1,6 +1,7 @@
 import { createClient } from '@/utils/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { Favicon } from './Favicon'
 
 type Profile = {
   id: string
@@ -146,24 +147,7 @@ export default async function PublicProfilePage({ params }: { params: { handle: 
                   <div className="flex items-center gap-4 min-w-0 flex-1">
                     {/* Favicon container */}
                     <div className="h-10 w-10 shrink-0 bg-zinc-950/80 border border-zinc-800 rounded-xl flex items-center justify-center overflow-hidden">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={`https://www.google.com/s2/favicons?domain=${hostname}&sz=64`}
-                        alt=""
-                        width={20}
-                        height={20}
-                        className="rounded shrink-0 object-contain opacity-80"
-                        onError={(e) => {
-                          const parent = e.currentTarget.parentElement
-                          if (parent) {
-                            parent.innerHTML = `
-                              <span class="text-xs font-bold text-zinc-500 font-mono">
-                                ${hostname.substring(0, 2).toUpperCase()}
-                              </span>
-                            `
-                          }
-                        }}
-                      />
+                      <Favicon hostname={hostname} />
                     </div>
 
                     <div className="min-w-0 flex-1 flex flex-col gap-0.5">
