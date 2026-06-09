@@ -111,6 +111,10 @@ The public profile page (`/[handle]`) was a Server Component, but the AI placed 
 
 React doesn't allow event handlers in Server Components — the page crashed at runtime with an `Unhandled Runtime Error`. I caught this when I first visited my profile page. The fix was to extract the image into a separate `'use client'` component (`Favicon.tsx`) that manages the error state with `useState`, which the AI then implemented correctly.
 
+### 3. Entire CLI Session Recording (Windows Compatibility)
+
+The Entire CLI session recording encountered a Windows compatibility issue because the hooks rely on `sh`, which isn't natively available on Windows. As a result, sessions were not auto-captured. To compensate, manual session logs were saved to [`.entire/sessions/`](file:///a:/Demo folder/bookmarks-app/.entire/sessions/) documenting each agent interaction, what was built, and where corrections were made.
+
 ---
 
 ## One Thing I'd Improve With More Time
